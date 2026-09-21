@@ -9,7 +9,7 @@ export const getALLJobs = async (params = {}) => {
 
 // getJob
 export const getJobByID = async(JobId) => {
-    const response = await api.get(`job/${JobId}`);
+    const response = await api.get(`/job/${JobId}`);
     return response.data;
 }
 
