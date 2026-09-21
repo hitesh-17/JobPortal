@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
-import Home from "../pages/home";
 import Jobs from "../pages/Jobs";
 import SavedJobs from "../pages/SavedJobs";
 import Register from "../pages/Register";
@@ -17,12 +16,13 @@ import MyJobs from "../pages/MyJobs";
 import CreateJob from "../pages/CreateJob";
 import JobApplicants from "../pages/JobApplicants";
 import EditJob from "../pages/EditJob";
+import Home from "../pages/Home";
 
 const AppRoute = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/:id" element={<JobDetails />} />
         <Route element={<PublicRoute />}>
