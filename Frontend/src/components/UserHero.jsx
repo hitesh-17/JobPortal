@@ -18,7 +18,7 @@ const UserHero = () => {
               <p className="mb-4 font-semibold text-blue-600">WELCOME BACK</p>
               <h1 className="text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">
                 Hello,
-                <span className="text-blue-600">{user.name}</span>
+                <span className="text-blue-600">{user?.name}</span>
               </h1>
 
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
