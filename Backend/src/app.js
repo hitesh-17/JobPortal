@@ -30,6 +30,9 @@ app.set("query parser", "extended");
 
 app.use(cookieParser());
 
+
+app.get("/", (req, res) => res.send("Server is up and running"));
+
 app.use("/v1/auth", authrouter);
 app.use("/v1/job", jobrouter);
 app.use("/v1/application", applicationRouter);
