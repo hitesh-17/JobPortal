@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const { user, loading, logout } = useAuth();
   const [openDropdown, setOpenDropdown] = useState(false);
-  console.log("navbar user", user);
+
   return (
     <nav className="border-b border-gray-200 bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">

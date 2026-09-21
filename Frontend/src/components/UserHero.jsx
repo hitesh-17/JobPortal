@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 
 const UserHero = () => {
   const { user, authChecked } = useAuth();
+
   if (!authChecked) {
     return null;
   }
-  console.log("userHero", user, user.role);
+
   return (
     <section className="bg-gradient-to-b from-blue-50 to-white">
       <div className="mx-auto max-w-7xl px-6 py-24">

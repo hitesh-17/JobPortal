@@ -33,11 +33,11 @@ const Register = () => {
     } // Example password validation if (password.length < 8) { setError("Password must be at least 8 characters"); return; }
     try {
       const data = await registerUser({ name, email, password, role });
-      console.log(data)
+          
       alert(data.message);
       navigate("/login")
     } catch (error) {
-      console.log(error.response?.data.message);
+      // console.log(error.response?.data.message);
       setErr(error.response?.data?.message || "Registration failed");
     }
   };

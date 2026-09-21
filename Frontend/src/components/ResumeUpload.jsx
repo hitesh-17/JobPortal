@@ -12,7 +12,6 @@ const ResumeUpload = () => {
 
   const handleFileChange = (e) => {
     const resumeFile = e.target.files[0];
-    console.log(resumeFile)
     setError("");
     setSuccess("");
 
@@ -54,7 +53,7 @@ const ResumeUpload = () => {
       setSuccess(data.message);
       setFile(null);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
 
       setError(
         error.response?.data?.message ||

@@ -8,8 +8,6 @@ const StatusSelector = ({ application, onStatusUpdated }) => {
 
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
-
-    console.log("Status being sent:",application._id, newStatus)
     try {
       setLoading(true);
       setError("");
@@ -20,9 +18,9 @@ const StatusSelector = ({ application, onStatusUpdated }) => {
       if (onStatusUpdated) {
         await onStatusUpdated();
       }
-      console.log("Status being sent:",application._id, newStatus)
+
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       setError(error.response?.data?.message || "Failed to update")
 
       setStatus(application.status);

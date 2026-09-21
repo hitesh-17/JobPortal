@@ -15,7 +15,7 @@ const MyApplication = () => {
       const data = await getMyApplication();
       setApplications(data.applications || [])
     } catch (error) {
-       console.error(error);
+      //  console.error(error);
 
       setError(
         error.response?.data?.message ||

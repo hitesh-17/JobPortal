@@ -59,7 +59,7 @@ const Jobs = () => {
       setJobs(data.jobs);
       setPagination(data.pagination);
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
       setErr(error.response?.data?.message || "Failed to Load Jobs");
     } finally {
       setLoading(false);

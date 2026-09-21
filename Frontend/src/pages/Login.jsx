@@ -23,7 +23,6 @@ const Login = () => {
         password,
       });
 
-      // console.log("login",data)
 
       setUser(data.user);
 
@@ -31,7 +30,7 @@ const Login = () => {
       navigate("/jobs");
 
     } catch (error) {
-      console.log("Login error:", error);
+      // console.log("Login error:", error);
 
       setErr(
         error.response?.data.message ||

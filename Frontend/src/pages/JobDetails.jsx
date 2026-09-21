@@ -26,7 +26,7 @@ const JobDetails = () => {
 
       setJob(data.job);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
 
       setErr(error.response?.data?.message || "Failed to load job");
     } finally {
@@ -38,7 +38,6 @@ const JobDetails = () => {
     fetchJob();
   }, [id]);
 
-  console.log(id);
   const jobApply = async () => {
     try {
       setApplying(true);
@@ -47,7 +46,7 @@ const JobDetails = () => {
       const data = await applyForJob(id);
       setApplySuccess(data.message);
     } catch (error) {
-      console.log("Error while Applying", error);
+      // console.log("Error while Applying", error);
       setApplyError(
         error.response?.data?.message || "Job application failed to apply",
       );

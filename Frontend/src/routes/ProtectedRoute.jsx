@@ -3,8 +3,6 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const ProtectedRoute = () => {
     const {user,authChecked} = useAuth();
-    console.log("protected user",user)
-    console.log("authchecked ",authChecked);
     if(!authChecked){
         return null;
     }

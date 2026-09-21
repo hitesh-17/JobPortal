@@ -17,17 +17,16 @@ const AuthProvider = ({ children }) => {
       try {
         setLoading(true);
         const data = await getCurrentUser();
-        console.log("current user data by Get/me", data);
         setUser(data.user);
       } catch (error) {
-        console.log("current user", error);
+        // console.log("current user", error);
         try {
           await refreshAccessToken();
           const data = await getCurrentUser();
-          console.log("current user data by Get/me", data);
+
           setUser(data.user);
         } catch (newError) {
-          console.log("user is unauthenticated");
+          setErr(newError.response?.data?.message || "user is unauthenticated")
 
           setUser(null);
         }
@@ -47,7 +46,7 @@ const AuthProvider = ({ children }) => {
       await logoutUser();
       setUser(null);
     } catch (error) {
-      console.log("logout Error", error);
+      // console.log("logout Error", error);
        setErr(
         error.response?.data?.message ||
         "Logout failed"

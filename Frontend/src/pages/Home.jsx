@@ -6,7 +6,6 @@ import UserHero from "../components/UserHero";
 
 const Home = () => {
   const { user, authChecked } = useAuth();
-  console.log("home", user);
   if (!authChecked) {
     return null;
   }

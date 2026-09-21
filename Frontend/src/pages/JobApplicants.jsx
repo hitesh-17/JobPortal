@@ -16,7 +16,7 @@ const JobApplicants = () => {
       setError("");
 
       const data = await getJobApplication(jobId);
-        console.log(data)
+
       setApplications(data.applications);
     } catch (error) {
       setError(
