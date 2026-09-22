@@ -106,8 +106,13 @@ const clearFilters = () => {
   setAppliedFilters(defaultFilters);
 };
 
-  const previousPage = () => {
-    if (!pagination.previousPage) {
+ const previousPage = () => {
+    if (pagination?.hasPreviousPage) {
+      setAppliedFilters((prev) => ({
+        ...prev,
+        page: prev.page - 1,
+      }));
+
       setFilters((prev) => ({
         ...prev,
         page: prev.page - 1,
@@ -115,14 +120,20 @@ const clearFilters = () => {
     }
   };
 
-  const nextPage = () => {
-    if (!pagination.nextPage) {
+    const nextPage = () => {
+    if (pagination?.hasNextPage) {
+      setAppliedFilters((prev) => ({
+        ...prev,
+        page: prev.page + 1,
+      }));
+
       setFilters((prev) => ({
         ...prev,
         page: prev.page + 1,
       }));
     }
   };
+
 
   return (
     <section className="min-h-screen bg-gray-50 px-6 py-10">
