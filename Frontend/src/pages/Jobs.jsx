@@ -8,7 +8,6 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
   const [pagination, setPagination] = useState(null);
-  const [appliedFilters, setAppliedFilters] = useState(filters);
 
   const [filters, setFilters] = useState({
     search: "",
@@ -21,6 +20,8 @@ const Jobs = () => {
     limit: 9,
     sort: "-createdAt",
   });
+
+    const [appliedFilters, setAppliedFilters] = useState(filters);
 
   const fetchJob = async () => {
     try {
