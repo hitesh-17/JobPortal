@@ -8,7 +8,8 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
   const [pagination, setPagination] = useState(null);
-  const [searchTrigger, setSearchTrigger] = useState(0);
+  const [appliedFilters, setAppliedFilters] = useState(filters);
+
   const [filters, setFilters] = useState({
     search: "",
     location: "",
@@ -27,39 +28,40 @@ const Jobs = () => {
       setErr(null);
 
       const params = {
-        page: filters.page,
-        limit: filters.limit,
-        sort: filters.sort,
+        page: appliedFilters.page,
+        limit: appliedFilters.limit,
+        sort: appliedFilters.sort,
       };
 
-      if (filters.search.trim()) {
-        params.search = filters.search.trim();
-      }
-      if (filters.location.trim()) {
-        params.location = filters.location.trim();
+      if (appliedFilters.search.trim()) {
+        params.search = appliedFilters.search.trim();
       }
 
-      if (filters.jobType) {
-        params.jobType = filters.jobType;
+      if (appliedFilters.location.trim()) {
+        params.location = appliedFilters.location.trim();
       }
 
-      if (filters.experienceLevel) {
-        params.experienceLevel = filters.experienceLevel;
+      if (appliedFilters.jobType) {
+        params.jobType = appliedFilters.jobType;
       }
 
-      if (filters.minSalary) {
-        params.minSalary = filters.minSalary;
+      if (appliedFilters.experienceLevel) {
+        params.experienceLevel = appliedFilters.experienceLevel;
       }
 
-      if (filters.maxSalary) {
-        params.maxSalary = filters.maxSalary;
+      if (appliedFilters.minSalary) {
+        params.minSalary = appliedFilters.minSalary;
+      }
+
+      if (appliedFilters.maxSalary) {
+        params.maxSalary = appliedFilters.maxSalary;
       }
 
       const data = await getALLJobs(params);
+
       setJobs(data.jobs);
       setPagination(data.pagination);
     } catch (error) {
-      // console.log("error", error);
       setErr(error.response?.data?.message || "Failed to Load Jobs");
     } finally {
       setLoading(false);
@@ -68,11 +70,7 @@ const Jobs = () => {
 
   useEffect(() => {
     fetchJob();
-  }, [
-    filters.page,
-    filters.limit,
-    filters.sort,
-  ]);
+  }, [appliedFilters]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,22 +86,24 @@ const Jobs = () => {
       ...prev,
       page: 1,
     }));
-    setSearchTrigger((prev) => prev + 1);
   };
 
-  const clearFilters = () => {
-    setFilters({
-      search: "",
-      location: "",
-      jobType: "",
-      experienceLevel: "",
-      minSalary: "",
-      maxSalary: "",
-      page: 1,
-      limit: 9,
-      sort: "-createdAt",
-    });
+const clearFilters = () => {
+  const defaultFilters = {
+    search: "",
+    location: "",
+    jobType: "",
+    experienceLevel: "",
+    minSalary: "",
+    maxSalary: "",
+    page: 1,
+    limit: 9,
+    sort: "-createdAt",
   };
+
+  setFilters(defaultFilters);
+  setAppliedFilters(defaultFilters);
+};
 
   const previousPage = () => {
     if (!pagination.previousPage) {
