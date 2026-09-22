@@ -13,7 +13,7 @@ const UserHero = () => {
     <section className="bg-gradient-to-b from-blue-50 to-white">
       <div className="mx-auto max-w-7xl px-6 py-24">
         <div className="mx-auto max-w-3xl text-center">
-          {!user ? (
+          {user ? (
             <>
               <p className="mb-4 font-semibold text-blue-600">WELCOME BACK</p>
               <h1 className="text-5xl font-bold tracking-tight text-gray-900 md:text-6xl">

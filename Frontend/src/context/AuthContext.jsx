@@ -1,5 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUser, logoutUser, refreshAccessToken } from "../API/auth.api";
+import {
+  getCurrentUser,
+  logoutUser,
+  refreshAccessToken,
+} from "../API/auth.api";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -9,27 +13,41 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const data = await getCurrentUser();
-        setUser(data.user);
-      } catch (error) {
-        // console.log("current user", error);
+
+        try {
+          const data = await getCurrentUser();
+          setUser(data.user);
+        } catch (error) {
+          if (error.response?.status !== 401) {
+            throw error;
+          }
+        }
+
         try {
           await refreshAccessToken();
           const data = await getCurrentUser();
 
           setUser(data.user);
         } catch (newError) {
-          setErr(newError.response?.data?.message || "user is unauthenticated")
+          if (newError.response?.status === 401) {
+            setUser(null);
+            return;
+          }
 
-          setUser(null);
+          throw refreshError;
         }
+      } catch (error) {
+        // console.log("current user", error);
+        setErr(error.response?.data?.message || "user is unauthenticated");
+
+        setUser(null);
       } finally {
         setLoading(false);
         setAuthChecked(true);
@@ -47,18 +65,24 @@ const AuthProvider = ({ children }) => {
       setUser(null);
     } catch (error) {
       // console.log("logout Error", error);
-       setErr(
-        error.response?.data?.message ||
-        "Logout failed"
-      );
-    }finally {
+      setErr(error.response?.data?.message || "Logout failed");
+    } finally {
       setLoading(false);
       navigate("/");
     }
   };
   return (
     <AuthContext.Provider
-      value={{ user, setUser, loading, setLoading, err, setErr, logout,authChecked }}
+      value={{
+        user,
+        setUser,
+        loading,
+        setLoading,
+        err,
+        setErr,
+        logout,
+        authChecked,
+      }}
     >
       {children}
     </AuthContext.Provider>

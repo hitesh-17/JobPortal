@@ -23,32 +23,32 @@ const AppRoute = () => {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home/>} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/jobs/:id" element={<JobDetails />} />
+        <Route path="/jobs" element={<Jobs/>} />
+        <Route path="/jobs/:id" element={<JobDetails/>} />
         <Route element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<RoleRoute allowedRoles={["jobseeker"]} />}>
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/saved-jobs" element={<SavedJobs />} />
-            <Route path="/my-applications" element={<MyApplication />} />
+            <Route path="/profile" element={<ProfilePage/>} />
+            <Route path="/saved-jobs" element={<SavedJobs/>} />
+            <Route path="/my-applications" element={<MyApplication/>} />
           </Route>
           <Route element={<RoleRoute allowedRoles={["recruiter"]} />}>
             <Route
               path="/recruiter/dashboard"
-              element={<RecruiterDashBoard />}
+              element={<RecruiterDashBoard/>}
             />
-            <Route path="/recruiter/jobs" element={<MyJobs />} />
-            <Route path="/recruiter/jobs/create" element={<CreateJob />} />
-            <Route path="/recruiter/jobs/create" element={<CreateJob />} />
+            <Route path="/recruiter/jobs" element={<MyJobs/>} />
+            <Route path="/recruiter/jobs/create" element={<CreateJob/>} />
+            <Route path="/recruiter/jobs/create" element={<CreateJob/>} />
             <Route
               path="/recruiter/jobs/:jobId/applications"
-              element={<JobApplicants />}/>
+              element={<JobApplicants/>}/>
               <Route
               path="/recruiter/jobs/:jobId/edit"
-              element={<EditJob />}/>
+              element={<EditJob/>}/>
           </Route>
         </Route>
       </Route>
