@@ -6,8 +6,7 @@ const ProtectedRoute = () => {
     if(!authChecked){
         return null;
     }
-    if(!user){
-        console.log("Hello")
+    if(!user){  
         return <Navigate to='/login' replace/>;
     };
   return <Outlet/>;

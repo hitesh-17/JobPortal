@@ -71,8 +71,6 @@ const Jobs = () => {
     // }));
   };
 
-  console.log("search", filters);
-
   const clearFilters = () => {
     setFilters(DEFAULT_FILTERS);
     setAppliedFilters(DEFAULT_FILTERS);

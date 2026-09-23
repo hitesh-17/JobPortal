@@ -19,9 +19,6 @@ export const logoutUser = async () => {
 
 export const getCurrentUser = async () => {
   const response = await api.get("/auth/me");
-  
-  console.log("Current user response:", response.data);
-
   return response.data;
 };
 
