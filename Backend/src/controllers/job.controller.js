@@ -283,7 +283,9 @@ export const deleteJob = catchAsync(async (req, res,next) => {
   const application = await ApplicationModel.findOne({job : id})
   console.log("application id : " ,application)
 
-  await ApplicationModel.findByIdAndDelete(application._id)
+  if(application){
+      await ApplicationModel.findByIdAndDelete(application._id)
+  }
   await jobModel.findByIdAndDelete(id);
 
   res.status(200).json({

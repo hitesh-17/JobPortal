@@ -3,67 +3,45 @@ import JobCard from "../components/JobCard";
 import { Link } from "react-router-dom";
 import { getALLJobs } from "../API/jobs.api";
 
+const DEFAULT_FILTERS = {
+  search: "",
+  location: "",
+  jobType: "",
+  experienceLevel: "",
+  minSalary: "",
+  maxSalary: "",
+  page: 1,
+  limit: 9,
+  sort: "-createdAt",
+};
+
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
   const [pagination, setPagination] = useState(null);
 
-  const [filters, setFilters] = useState({
-    search: "",
-    location: "",
-    jobType: "",
-    experienceLevel: "",
-    minSalary: "",
-    maxSalary: "",
-    page: 1,
-    limit: 9,
-    sort: "-createdAt",
-  });
-
-    const [appliedFilters, setAppliedFilters] = useState(filters);
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [appliedFilters, setAppliedFilters] = useState(DEFAULT_FILTERS);
 
   const fetchJob = async () => {
     try {
       setLoading(true);
       setErr(null);
 
-      const params = {
-        page: appliedFilters.page,
-        limit: appliedFilters.limit,
-        sort: appliedFilters.sort,
-      };
-
-      if (appliedFilters.search.trim()) {
-        params.search = appliedFilters.search.trim();
-      }
-
-      if (appliedFilters.location.trim()) {
-        params.location = appliedFilters.location.trim();
-      }
-
-      if (appliedFilters.jobType) {
-        params.jobType = appliedFilters.jobType;
-      }
-
-      if (appliedFilters.experienceLevel) {
-        params.experienceLevel = appliedFilters.experienceLevel;
-      }
-
-      if (appliedFilters.minSalary) {
-        params.minSalary = appliedFilters.minSalary;
-      }
-
-      if (appliedFilters.maxSalary) {
-        params.maxSalary = appliedFilters.maxSalary;
-      }
+      const params = Object.fromEntries(
+        Object.entries(appliedFilters).filter(
+          ([key, value]) =>
+            value !== "" && value !== null && value !== undefined,
+        ),
+      );
 
       const data = await getALLJobs(params);
 
-      setJobs(data.jobs);
-      setPagination(data.pagination);
+      setJobs(data.jobs || []);
+      setPagination(data.pagination || null);
     } catch (error) {
-      setErr(error.response?.data?.message || "Failed to Load Jobs");
+      setErr(error.response?.data?.message || "Failed to load jobs");
     } finally {
       setLoading(false);
     }
@@ -83,31 +61,25 @@ const Jobs = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setFilters((prev) => ({
-      ...prev,
+    setAppliedFilters({
+      ...filters,
       page: 1,
-    }));
+    });
+    // setFilters((prev) => ({
+    //   ...prev,
+    //   page: prev.page,
+    // }));
   };
 
-const clearFilters = () => {
-  const defaultFilters = {
-    search: "",
-    location: "",
-    jobType: "",
-    experienceLevel: "",
-    minSalary: "",
-    maxSalary: "",
-    page: 1,
-    limit: 9,
-    sort: "-createdAt",
+  console.log("search", filters);
+
+  const clearFilters = () => {
+    setFilters(DEFAULT_FILTERS);
+    setAppliedFilters(DEFAULT_FILTERS);
   };
 
-  setFilters(defaultFilters);
-  setAppliedFilters(defaultFilters);
-};
-
- const previousPage = () => {
-    if (pagination?.hasPreviousPage) {
+  const previousPage = () => {
+    if (!pagination?.hasPreviousPage) return;
       setAppliedFilters((prev) => ({
         ...prev,
         page: prev.page - 1,
@@ -117,11 +89,10 @@ const clearFilters = () => {
         ...prev,
         page: prev.page - 1,
       }));
-    }
   };
 
-    const nextPage = () => {
-    if (pagination?.hasNextPage) {
+  const nextPage = () => {
+    if (!pagination?.hasNextPage) return;
       setAppliedFilters((prev) => ({
         ...prev,
         page: prev.page + 1,
@@ -131,9 +102,7 @@ const clearFilters = () => {
         ...prev,
         page: prev.page + 1,
       }));
-    }
   };
-
 
   return (
     <section className="min-h-screen bg-gray-50 px-6 py-10">

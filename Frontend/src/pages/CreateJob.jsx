@@ -20,19 +20,6 @@ const CreateJob = () => {
     skills: "",
   });
 
-  const minSalary = Number(formData.minSalary);
-  const maxSalary = Number(formData.maxSalary);
-
-  if (minSalary < 0 || maxSalary < 0) {
-    setError("Salary cannot be negative.");
-    return;
-  }
-
-  if (maxSalary < minSalary) {
-    setError("Maximum salary cannot be less than minimum salary.");
-    return;
-  }
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -44,6 +31,21 @@ const CreateJob = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const minSalary = Number(formData.minSalary);
+    const maxSalary = Number(formData.maxSalary);
+
+    if (minSalary < 0 || maxSalary < 0) {
+      setError("Salary cannot be negative.");
+      return;
+    }
+
+    if (maxSalary < minSalary) {
+      setError("Maximum salary cannot be less than minimum salary.");
+      return;
+    }
+
+    
     try {
       setLoading(true);
       setError("");
